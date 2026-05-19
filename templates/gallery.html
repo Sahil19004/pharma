@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallery - jiet</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+  <style>
+/* ── Card hover effect ── */
+.card-img-wrap{position:relative;overflow:hidden;cursor:pointer}
+.card-img-wrap img{width:100%;display:block;transition:transform .38s ease}
+.card-img-overlay{position:absolute;inset:0;background:rgba(0,0,0,0);display:flex;align-items:center;justify-content:center;transition:background .28s ease}
+.card-img-wrap:hover .card-img-overlay{background:rgba(0,0,0,0.4)}
+.card-img-wrap:hover img{transform:scale(1.05)}
+.zoom-btn{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,0.14);border:2px solid rgba(255,255,255,0.6);display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(0.55);transition:opacity .28s,transform .28s;backdrop-filter:blur(4px)}
+.card-img-wrap:hover .zoom-btn{opacity:1;transform:scale(1)}
+
+/* ── Dim backdrop — NOT fullscreen modal ── */
+.lb-backdrop{
+  position:fixed;inset:0;z-index:9999;
+  background:rgba(0,0,0,0.5);
+  display:flex;align-items:center;justify-content:center;
+  padding:24px;
+  opacity:0;visibility:hidden;
+  transition:opacity .22s ease,visibility .22s ease;
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
+}
+.lb-backdrop.active{opacity:1;visibility:visible}
+
+/* ── The popup modal itself — centered, NOT fullscreen ── */
+.lb-modal{
+  background:#ffffff;
+  border-radius:16px;
+  box-shadow:0 32px 90px rgba(0,0,0,0.3), 0 0 0 1px rgba(0,0,0,0.06);
+  width:100%;
+  max-width:760px;          /* capped width — page is visible on sides */
+  max-height:88vh;          /* capped height — page visible top/bottom */
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  transform:scale(0.88) translateY(20px);
+  transition:transform .26s cubic-bezier(.34,1.56,.64,1);
+}
+.lb-backdrop.active .lb-modal{transform:scale(1) translateY(0)}
+
+/* ── Header ── */
+.lb-header{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border-bottom:1px solid #efefef;flex-shrink:0}
+.lb-header-left{display:flex;align-items:center;gap:10px}
+.lb-title{font-size:0.88rem;font-weight:600;color:#1a1a1a}
+.lb-counter{font-size:0.72rem;color:#aaa;background:#f4f4f4;padding:2px 8px;border-radius:20px;font-weight:500}
+.lb-close-btn{width:30px;height:30px;border-radius:7px;border:1px solid #e5e5e5;background:#f9f9f9;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#555;transition:background .18s,color .18s}
+.lb-close-btn:hover{background:#fde8e8;color:#d33;border-color:#f5c0c0}
+
+/* ── Image area ── */
+.lb-body{position:relative;display:flex;align-items:center;justify-content:center;background:#f6f6f6;flex:1;min-height:0}
+.lb-viewport{overflow:hidden;display:flex;align-items:center;justify-content:center;width:100%;height:100%;min-height:300px;max-height:54vh;cursor:grab}
+.lb-viewport:active{cursor:grabbing}
+.lb-viewport img{max-width:100%;max-height:54vh;width:auto;height:auto;object-fit:contain;display:block;transform-origin:center;transition:transform .2s ease;user-select:none;-webkit-user-drag:none;pointer-events:none}
+
+/* ── Prev / Next arrows (inside image area) ── */
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,0.9);border:1px solid #ddd;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#333;box-shadow:0 2px 8px rgba(0,0,0,0.12);transition:background .18s,box-shadow .18s}
+.lb-nav:hover{background:#fff;box-shadow:0 4px 14px rgba(0,0,0,0.18)}
+.lb-nav-l{left:10px}
+.lb-nav-r{right:10px}
+.lb-nav-l:hover{transform:translateY(-50%) translateX(-1px)}
+.lb-nav-r:hover{transform:translateY(-50%) translateX(1px)}
+
+/* ── Footer ── */
+.lb-footer{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-top:1px solid #efefef;flex-shrink:0;gap:12px}
+.lb-desc{font-size:0.78rem;color:#888;margin:0;flex:1;line-height:1.5}
+.lb-zoom-bar{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.lb-zoom-val{font-size:0.72rem;font-weight:600;color:#555;min-width:34px;text-align:center}
+.lb-zbtn{width:26px;height:26px;border-radius:6px;border:1px solid #e0e0e0;background:#fafafa;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#444;transition:background .15s}
+.lb-zbtn:hover{background:#ececec}
+
+@media(max-width:560px){
+  .lb-nav{display:none}
+  .lb-backdrop{padding:12px}
+  .lb-modal{border-radius:12px;max-height:92vh}
+  .lb-viewport{min-height:220px;max-height:46vh}
+  .lb-viewport img{max-height:46vh}
+  .lb-footer{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body class="gallery-page">
+  <div class="preloader" aria-hidden="true">
+    <div class="preloader-inner">
+      <img src="{% static 'images/finallogo.png' %}" alt="jiet Logo" class="preloader-logo" />
+      <span class="preloader-ring"></span>
+    </div>
+  </div>
+ <nav class="navbar" id="navbar">
+    <div class="nav-container" >
+      <a href="{% url 'indexpage' %}" class="nav-logo">
+     
+        <span class="logo-text" style="padding: 9%;"><img src="
+          {% static 'images/finallogo.png' %}" alt="jiet Logo" width="250"></span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="{% url 'indexpage' %}" class="nav-link active">Home</a></li>
+        <li><a href="{% url 'about' %}" class="nav-link">About</a></li>
+        <li class="nav-dropdown">
+          <a href="{% if categories %}{% url 'products' categories.0.slug %}{% else %}#{% endif %}" class="nav-link dropdown-toggle">Products</a>
+          <div class="dropdown-menu">
+            {% for category in categories %}
+            <a href="{% url 'products' category.slug %}" class="dropdown-item">{{ category.name }}</a>
+            {% endfor %}
+          </div>
+        </li>
+        <li class="nav-dropdown">
+          <a href="{% url 'services' %}" class="nav-link dropdown-toggle">Services</a>
+          <div class="dropdown-menu">
+            <a href="{% url 'services' %}" class="dropdown-item">All Services</a>
+            {% for category in service_categories %}
+            <a href="{% url 'service_detail' category.slug %}" class="dropdown-item">{{ category.name }}</a>
+            {% endfor %}
+          </div>
+        </li>
+        <li><a href="{% url 'gallery' %}" class="nav-link">Gallery</a></li>
+        <li><a href="{% url 'contact' %}" class="nav-link">Contact</a></li>
+        <li><a href="{% url 'contact' %}" class="nav-cta">Get a Quote</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Toggle Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+<main class="page-main">
+  <section class="page-hero-lite">
+    <div class="container">
+      <p class="section-tag">Gallery</p>
+     
+    </div>
+  </section>
+
+  <section class="gallery-page-wrap">
+    <div class="container">
+      <div class="gallery-page-grid">
+{% for item in gallery %}
+        <article class="website-card">
+          <div class="card-img-wrap">
+            <img src="{{ item.image.url }}" alt="{{ item.title }}" loading="lazy">
+            <div class="card-img-overlay"><span class="zoom-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="white" stroke-width="2"/><path d="M16.5 16.5L21 21" stroke="white" stroke-width="2" stroke-linecap="round"/><path d="M8 11h6M11 8v6" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></span></div>
+          </div>
+          <div class="card-body"><h4>{{ item.title }}</h4><p>{{ item.description }}</p></div>
+        </article>
+{% endfor %}
+      
+
+       
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ═══════ CENTERED MODAL POPUP ═══════ -->
+<div id="lb-backdrop" class="lb-backdrop">
+  <div class="lb-modal" role="dialog" aria-modal="true">
+
+    <!-- Header -->
+    <div class="lb-header">
+      <div class="lb-header-left">
+        <span id="lb-title" class="lb-title"></span>
+        <span id="lb-counter" class="lb-counter"></span>
+      </div>
+      <button id="lb-close" class="lb-close-btn" aria-label="Close popup">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+
+    <!-- Image -->
+    <div class="lb-body">
+      <button id="lb-prev" class="lb-nav lb-nav-l" aria-label="Previous">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="lb-viewport" id="lb-viewport">
+        <img id="lb-img" src="" alt="">
+      </div>
+      <button id="lb-next" class="lb-nav lb-nav-r" aria-label="Next">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+
+    <!-- Footer -->
+    <div class="lb-footer">
+      <p id="lb-desc" class="lb-desc"></p>
+      <div class="lb-zoom-bar">
+        <button class="lb-zbtn" id="lb-zoom-out" title="Zoom out">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M8 12h8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+        </button>
+        <span id="lb-zoom-val" class="lb-zoom-val">100%</span>
+        <button class="lb-zbtn" id="lb-zoom-in" title="Zoom in">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+        </button>
+        <button class="lb-zbtn" id="lb-zoom-reset" title="Reset">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M4 8V4h4M20 8V4h-4M4 16v4h4M20 16v4h-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+<script>
+(function(){
+  const cards    = Array.from(document.querySelectorAll('.website-card'));
+  const backdrop = document.getElementById('lb-backdrop');
+  const lbImg    = document.getElementById('lb-img');
+  const lbTitle  = document.getElementById('lb-title');
+  const lbDesc   = document.getElementById('lb-desc');
+  const lbCounter= document.getElementById('lb-counter');
+  const lbClose  = document.getElementById('lb-close');
+  const lbPrev   = document.getElementById('lb-prev');
+  const lbNext   = document.getElementById('lb-next');
+  const lbZoomIn = document.getElementById('lb-zoom-in');
+  const lbZoomOut= document.getElementById('lb-zoom-out');
+  const lbZoomRst= document.getElementById('lb-zoom-reset');
+  const lbZoomVal= document.getElementById('lb-zoom-val');
+  const viewport = document.getElementById('lb-viewport');
+
+  let cur=0, zoom=1;
+  const STEP=0.25, MAX=3, MIN=0.5;
+
+  const items = cards.map(c=>({
+    src:  c.querySelector('img').src,
+    alt:  c.querySelector('img').alt,
+    title:c.querySelector('h4').textContent,
+    desc: c.querySelector('p').textContent,
+  }));
+
+  function open(i){ cur=i; zoom=1; load(i); backdrop.classList.add('active'); document.body.style.overflow='hidden'; }
+  function close(){ backdrop.classList.remove('active'); document.body.style.overflow=''; }
+  function load(i){
+    const it=items[i];
+    lbImg.src=it.src; lbImg.alt=it.alt;
+    lbTitle.textContent=it.title;
+    lbDesc.textContent=it.desc;
+    lbCounter.textContent=(i+1)+' / '+items.length;
+    zoom=1; applyZoom();
+  }
+  function applyZoom(){ lbImg.style.transform='scale('+zoom+')'; lbZoomVal.textContent=Math.round(zoom*100)+'%'; }
+
+  cards.forEach((c,i)=>c.querySelector('.card-img-wrap').addEventListener('click',()=>open(i)));
+  lbClose.addEventListener('click', close);
+  backdrop.addEventListener('click', e=>{ if(e.target===backdrop) close(); });
+  lbPrev.addEventListener('click', ()=>{ cur=(cur-1+items.length)%items.length; load(cur); });
+  lbNext.addEventListener('click', ()=>{ cur=(cur+1)%items.length; load(cur); });
+  lbZoomIn.addEventListener('click',  ()=>{ zoom=Math.min(MAX,+(zoom+STEP).toFixed(2)); applyZoom(); });
+  lbZoomOut.addEventListener('click', ()=>{ zoom=Math.max(MIN,+(zoom-STEP).toFixed(2)); applyZoom(); });
+  lbZoomRst.addEventListener('click', ()=>{ zoom=1; applyZoom(); });
+
+  viewport.addEventListener('wheel', e=>{
+    e.preventDefault();
+    zoom=e.deltaY<0?Math.min(MAX,+(zoom+STEP).toFixed(2)):Math.max(MIN,+(zoom-STEP).toFixed(2));
+    applyZoom();
+  },{passive:false});
+
+  document.addEventListener('keydown', e=>{
+    if(!backdrop.classList.contains('active')) return;
+    if(e.key==='Escape') close();
+    if(e.key==='ArrowLeft')  { cur=(cur-1+items.length)%items.length; load(cur); }
+    if(e.key==='ArrowRight') { cur=(cur+1)%items.length; load(cur); }
+    if(e.key==='+'||e.key==='=') { zoom=Math.min(MAX,+(zoom+STEP).toFixed(2)); applyZoom(); }
+    if(e.key==='-') { zoom=Math.max(MIN,+(zoom-STEP).toFixed(2)); applyZoom(); }
+  });
+
+  let tx=0;
+  backdrop.addEventListener('touchstart', e=>{ tx=e.touches[0].clientX; },{passive:true});
+  backdrop.addEventListener('touchend', e=>{
+    const d=tx-e.changedTouches[0].clientX;
+    if(Math.abs(d)>50){ cur=d>0?(cur+1)%items.length:(cur-1+items.length)%items.length; load(cur); }
+  });
+})();
+</script>
+  {% include 'partials/footer.html' %}
+<script src="/static/js/script.js"></script>
+</body>
+</html>

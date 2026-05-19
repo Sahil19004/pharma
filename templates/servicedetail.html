@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ service.name }} - NovaCorp Solutions</title>
+  <meta name="description" content="{{ service.description }}" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+  <style>
+    .cursor{position:fixed;width:12px;height:12px;background:#5cb85c;border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:width .2s,height .2s,opacity .2s;mix-blend-mode:multiply}
+    .cursor-ring{position:fixed;width:38px;height:38px;border:1.5px solid rgba(92,184,92,.5);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:transform .12s linear,width .25s,height .25s,border-color .25s}
+    .cursor.hovered{width:20px;height:20px;opacity:.6}
+    .cursor-ring.hovered{width:56px;height:56px;border-color:#5cb85c}
+  </style>
+</head>
+<body class="service-detail-body">
+  <div class="preloader" aria-hidden="true">
+    <div class="preloader-inner">
+      <img src="{% static 'images/finallogo.png' %}" alt="jiet Logo" class="preloader-logo" />
+      <span class="preloader-ring"></span>
+    </div>
+  </div>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="{% url 'indexpage' %}" class="nav-logo"><span class="logo-text" style="padding: 9%;"><img src="{% static 'images/finallogo.png' %}" alt="jiet Logo" width="250"></span></a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="{% url 'indexpage' %}" class="nav-link">Home</a></li>
+        <li><a href="{% url 'about' %}" class="nav-link">About</a></li>
+        <li class="nav-dropdown">
+          <a href="{% if categories %}{% url 'products' categories.0.slug %}{% else %}#{% endif %}" class="nav-link dropdown-toggle">Products</a>
+          <div class="dropdown-menu">
+            {% for category in categories %}
+            <a href="{% url 'products' category.slug %}" class="dropdown-item">{{ category.name }}</a>
+            {% endfor %}
+          </div>
+        </li>
+        <li class="nav-dropdown">
+          <a href="{% url 'services' %}" class="nav-link dropdown-toggle active">Services</a>
+          <div class="dropdown-menu">
+            <a href="{% url 'services' %}" class="dropdown-item">All Services</a>
+            {% for category in service_categories %}
+            <a href="{% url 'service_detail' category.slug %}" class="dropdown-item">{{ category.name }}</a>
+            {% endfor %}
+          </div>
+        </li>
+        <li><a href="{% url 'gallery' %}" class="nav-link">Gallery</a></li>
+        <li><a href="{% url 'contact' %}" class="nav-link">Contact</a></li>
+        <li><a href="{% url 'contact' %}" class="nav-cta">Get a Quote</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Toggle Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <section class="svc-hero" id="serviceHero">
+    <div class="svc-hero-bg" style="background-image: url('{{ service.image.url }}')"></div>
+    <div class="svc-hero-overlay"></div>
+    <div class="svc-hero-texture"></div>
+    <div class="svc-hero-content">
+      <a href="{% url 'services' %}" class="svc-breadcrumb reveal-up"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Back to Services</a>
+      <p class="svc-hero-tag reveal-up">Service Detail</p>
+      <h1 class="svc-hero-title reveal-up delay-1">{{ service.name }}</h1>
+      <p class="svc-hero-sub reveal-up delay-2">{{ service.description }}</p>
+    </div>
+  </section>
+
+  <main class="svc-main">
+    <section class="svc-about section">
+      <div class="container">
+        <div class="svc-about-grid">
+          <div class="svc-img-wrap fade-in-left">
+            <div class="svc-img-frame">
+              <img src="{{ service.image.url }}" alt="{{ service.name }}" loading="eager" />
+              <div class="svc-img-badge"><span class="svc-badge-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="#5cb85c" stroke-width="2" stroke-linecap="round"/></svg></span><span>Certified Quality</span></div>
+            </div>
+          </div>
+          <div class="svc-text fade-in-right">
+            <p class="section-tag">About This Service</p>
+            <h2 class="section-title">{{ service.about_heading }}</h2>
+            <p class="svc-desc">{{ service.about_description }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="svc-features section bg-light">
+      <div class="container">
+        <div class="section-header fade-in">
+          <p class="section-tag">Key Features</p>
+          <h2 class="section-title">{{ service.key_features_heading }}</h2>
+        </div>
+        <div class="svc-features-grid">
+          <div class="svc-feature-card fade-in" style="--delay: 0s">
+            <div class="svc-feature-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <h3>{{ service.key_features_heading }}</h3>
+            <p>{{ service.key_features_description }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="svc-cta">
+      <div class="svc-cta-bg"></div>
+      <div class="container svc-cta-content fade-in">
+        <div class="svc-cta-text"><h2>Need This Service?</h2><p>Contact us today for a consultation and free quote.</p></div>
+        <div class="svc-cta-actions"><a href="{% url 'contact' %}" class="btn btn-white">Get a Free Quote</a><a href="{% url 'services' %}" class="btn btn-outline-white">View All Services</a></div>
+      </div>
+    </section>
+  </main>
+
+  {% include 'partials/footer.html' %}
+
+  <button class="back-to-top" id="backToTop" aria-label="Back to top" onclick="scrollToTop()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 15l7-7 7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+<script src="/static/js/script.js"></script>
+  <script>const cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');let mouseX=0,mouseY=0,ringX=0,ringY=0;document.addEventListener('mousemove',e=>{mouseX=e.clientX;mouseY=e.clientY;cursor.style.left=mouseX+'px';cursor.style.top=mouseY+'px'});function animateRing(){ringX+=(mouseX-ringX)*.14;ringY+=(mouseY-ringY)*.14;ring.style.left=ringX+'px';ring.style.top=ringY+'px';requestAnimationFrame(animateRing)}animateRing();document.querySelectorAll('a, button').forEach(el=>{el.addEventListener('mouseenter',()=>{cursor.classList.add('hovered');ring.classList.add('hovered')});el.addEventListener('mouseleave',()=>{cursor.classList.remove('hovered');ring.classList.remove('hovered')})});</script>
+</body>
+</html>

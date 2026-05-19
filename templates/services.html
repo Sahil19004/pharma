@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Services - NovaCorp Solutions</title>
+  <meta name="description" content="Explore NovaCorp Solutions' complete engineering service catalogue including fabrication, erection, painting, insulation, and AMC services." />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="{% static 'css/fonts.css' %}" rel="stylesheet" />
+  <style>
+    .cursor{position:fixed;width:12px;height:12px;background:#5cb85c;border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:width .2s,height .2s,opacity .2s;mix-blend-mode:multiply}
+    .cursor-ring{position:fixed;width:38px;height:38px;border:1.5px solid rgba(92,184,92,.5);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:transform .12s linear,width .25s,height .25s,border-color .25s}
+    .cursor.hovered{width:20px;height:20px;opacity:.6}
+    .cursor-ring.hovered{width:56px;height:56px;border-color:#5cb85c}
+    /* NEW SERVICE CARD DESIGN */
+.service-catalog-card {
+    background: #ffffff;
+    border-radius: 24px;
+    overflow: hidden;
+  border: 1px solid rgba(92,184,92,0.2);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.service-catalog-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(92,184,92,0.45);
+  box-shadow: 0 18px 36px rgba(92,184,92,0.2);
+}
+
+/* IMAGE SECTION */
+.service-img-wrapper {
+    width: 100%;
+    aspect-ratio: 1/1; /* perfect square */
+    overflow: hidden;
+  background: linear-gradient(135deg, rgba(92,184,92,0.08), rgba(92,184,92,0.02));
+  position: relative;
+}
+
+.service-img-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 60%, rgba(0,0,0,0.15) 100%);
+  pointer-events: none;
+}
+
+.service-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* CONTENT */
+.service-content {
+    padding: 1.2rem 1.4rem;
+}
+
+.service-content h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  color: #153015;
+}
+
+.service-content p {
+    font-size: 0.9rem;
+    margin-bottom: 0.8rem;
+  color: #3f4f3f;
+}
+
+.service-content ul {
+    padding-left: 1rem;
+    margin-bottom: 1rem;
+}
+
+.service-content ul li {
+    font-size: 0.85rem;
+    margin-bottom: 0.3rem;
+}
+
+.service-link-btn {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    border: 1.5px solid #5cb85c;
+    border-radius: 50px;
+    color: #5cb85c;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.service-link-btn:hover {
+    background: #5cb85c;
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+  .service-img-wrapper {
+    aspect-ratio: 4/3;
+  }
+
+  .service-content {
+    padding: 1rem 1.1rem;
+  }
+
+  .service-content h3 {
+    font-size: 1.05rem;
+  }
+
+  .service-content p {
+    font-size: 0.85rem;
+  }
+
+  .service-content ul li {
+    font-size: 0.82rem;
+  }
+
+  .service-link-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+}
+  </style>
+</head>
+<body class="services-page">
+  <div class="preloader" aria-hidden="true">
+    <div class="preloader-inner">
+      <img src="{% static 'images/finallogo.png' %}" alt="jiet Logo" class="preloader-logo" />
+      <span class="preloader-ring"></span>
+    </div>
+  </div>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+ <nav class="navbar" id="navbar">
+    <div class="nav-container" >
+      <a href="{% url 'indexpage' %}" class="nav-logo">
+     
+        <span class="logo-text" style="padding: 9%;"><img src="{% static 'images/finallogo.png' %}" alt="jiet Logo" width="250"></span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="{% url 'indexpage' %}" class="nav-link active">Home</a></li>
+        <li><a href="{% url 'about' %}" class="nav-link">About</a></li>
+        <li class="nav-dropdown">
+          <a href="{% if categories %}{% url 'products' categories.0.slug %}{% else %}#{% endif %}" class="nav-link dropdown-toggle">Products</a>
+          <div class="dropdown-menu">
+            {% for category in categories %}
+            <a href="{% url 'products' category.slug %}" class="dropdown-item">{{ category.name }}</a>
+            {% endfor %}
+          </div>
+        </li>
+        <li class="nav-dropdown">
+          <a href="{% url 'services' %}" class="nav-link dropdown-toggle">Services</a>
+          <div class="dropdown-menu">
+            <a href="{% url 'services' %}" class="dropdown-item">All Services</a>
+            {% for category in service_categories %}
+            <a href="{% url 'service_detail' category.slug %}" class="dropdown-item">{{ category.name }}</a>
+            {% endfor %}
+          </div>
+        </li>
+        <li><a href="{% url 'gallery' %}" class="nav-link">Gallery</a></li>
+        <li><a href="{% url 'contact' %}" class="nav-link">Contact</a></li>
+        <li><a href="{% url 'contact' %}" class="nav-cta">Get a Quote</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Toggle Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main class="page-main">
+    <section class="page-hero-lite">
+      <div class="page-hero-texture"></div>
+      <div class="container" style="position:relative;z-index:1;">
+        <p class="section-tag reveal-up">Our Services</p>
+        <h1 class="section-title reveal-up delay-1">Engineering <span class="text-green">Service Catalogue</span></h1>
+        <p class="section-sub reveal-up delay-2">Choose a service to view complete details, service image, description, and features.</p>
+      </div>
+    </section>
+
+    <section class="services-overview">
+      <div class="container">
+        <div class="service-catalog-grid">
+{% for service in services %}
+<article class="service-catalog-card">
+
+  <div class="service-img-wrapper">
+    <img src="{{ service.image.url }}" alt="{{ service.name }}">
+  </div>
+
+  <div class="service-content">
+    <h3>{{ service.name }}</h3>
+    <p>{{ service.description|truncatechars:80 }}</p>
+
+    
+
+    <a href="{% url 'service_detail_info' service.id %}" class="service-link-btn">
+      Read More →
+    </a>
+  </div>
+
+</article>
+{% endfor %}
+
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="svc-cta">
+      <div class="svc-cta-bg"></div>
+      <div class="container svc-cta-content fade-in">
+        <div class="svc-cta-text">
+          <h2>Ready to Start Your Next Project?</h2>
+          <p>Get in touch with our team for a consultation and customized quote.</p>
+        </div>
+        <div class="svc-cta-actions">
+          <a href="{% url 'contact' %}" class="btn btn-white">Get a Free Quote</a>
+          <a href="{% url 'indexpage' %}" class="btn btn-outline-white">Back to Home</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  {% include 'partials/footer.html' %}
+
+  <button class="back-to-top" id="backToTop" aria-label="Back to top" onclick="scrollToTop()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 15l7-7 7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+<script src="/static/js/script.js"></script>
+  <script>
+    const cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');let mouseX=0,mouseY=0,ringX=0,ringY=0;document.addEventListener('mousemove',e=>{mouseX=e.clientX;mouseY=e.clientY;cursor.style.left=mouseX+'px';cursor.style.top=mouseY+'px'});function animateRing(){ringX+=(mouseX-ringX)*.14;ringY+=(mouseY-ringY)*.14;ring.style.left=ringX+'px';ring.style.top=ringY+'px';requestAnimationFrame(animateRing)}animateRing();document.querySelectorAll('a, button').forEach(el=>{el.addEventListener('mouseenter',()=>{cursor.classList.add('hovered');ring.classList.add('hovered')});el.addEventListener('mouseleave',()=>{cursor.classList.remove('hovered');ring.classList.remove('hovered')})});
+  </script>
+</body>
+</html>
