@@ -70,3 +70,11 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Client(models.Model):
+    name=models.CharField(max_length=100)
+    logo=models.ImageField(upload_to='clients/')
+
+    def __str__(self):
+        return self.name
