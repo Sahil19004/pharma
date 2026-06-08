@@ -1,11 +1,12 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Banner, Category, Product, ServiceCategory, Service, Gallery, Contact
+from .models import Banner, Category, Client, Product, ServiceCategory, Service, Gallery, Contact,Client
 # Create your views here.
 def indexpage(request):
     banner = Banner.objects.all()
     gallery_items = Gallery.objects.all()[0:5]
     service_categories = ServiceCategory.objects.all()
     categories = Category.objects.all()
+    clients = Client.objects.all()  # ✅ Fetch clients for marquee
 
     # Latest 6 products
     products = Product.objects.order_by('-id')[:6]
@@ -22,6 +23,7 @@ def indexpage(request):
             'products': products,
             'categories': categories,   
             'services': services,
+            'clients': clients,
         }
     )
 

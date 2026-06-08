@@ -235,6 +235,54 @@
             box-shadow: 0 12px 24px rgba(92, 184, 92, 0.4);
         }
 
+        .modal-premium {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+            background: rgba(8, 20, 8, 0.55);
+            backdrop-filter: blur(4px);
+            z-index: 9999;
+        }
+
+        .modal-premium.active {
+            display: flex;
+        }
+
+        .modal-premium-container {
+            width: min(760px, 100%);
+            max-height: calc(100vh - 4rem);
+            background: #FFFFFF;
+            border-radius: 36px;
+            overflow: hidden;
+            border: 1px solid var(--gray-soft);
+            box-shadow: var(--shadow-premium);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-header-premium {
+            padding: 1.8rem 2rem 0.6rem;
+        }
+
+        .modal-header-premium h3 {
+            font-size: 1.4rem;
+            color: var(--apple-dark);
+        }
+
+        .modal-body-premium {
+            padding: 0 2rem 2rem;
+            overflow-y: auto;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1rem 1.2rem;
+        }
+
         .required-star {
             color: #D9534F;
         }
@@ -319,6 +367,19 @@
             .detail-content {
                 padding: 1.5rem;
             }
+            .modal-premium {
+                padding: 1.2rem 0.8rem;
+            }
+            .modal-premium-container {
+                border-radius: 24px;
+                max-height: calc(100vh - 2.4rem);
+            }
+            .modal-header-premium {
+                padding: 1.4rem 1.4rem 0.4rem;
+            }
+            .modal-body-premium {
+                padding: 0 1.4rem 1.4rem;
+            }
         }
     </style>
 </head>
@@ -390,238 +451,23 @@
                 {{ product.description|linebreaks }}
             </div>
 
-            <!-- Extensive Technical Features (very broad) -->
-            <div class="section-title">🔧 Extensive Technical Specifications & Capabilities</div>
-            <div class="features-premium-grid">
-                <div class="tech-pill">Max output: 480,000 tabs/hour</div>
-                <div class="tech-pill">Main compression: 130 kN</div>
-                <div class="tech-pill">Pre-compression: 25 kN (hydraulic)</div>
-                <div class="tech-pill">Turret stations: 75 / 85 / 95 options</div>
-                <div class="tech-pill">Tablet diameter: 2mm – 28mm</div>
-                <div class="tech-pill">Fill depth: 3mm – 22mm</div>
-                <div class="tech-pill">Main motor: 15 kW / 20 HP</div>
-                <div class="tech-pill">HMI: 17” multi-touch SCADA</div>
-                <div class="tech-pill">Weight control: CIP/SIP ready</div>
-                <div class="tech-pill">Materials: 316L stainless steel</div>
-                <div class="tech-pill">Force monitoring per station</div>
-                <div class="tech-pill">Auto rejection + data logging</div>
-            </div>
-
+         
         
 
             <!-- Call to Action: Send Inquiry Button -->
             <div class="inquiry-wrapper">
+                <a href="{% url 'contact' %}">
                 <button class="inquiry-premium-btn" id="openInquiryModalBtn">📩 Send Inquiry → Get Complete Quote</button>
+                </a>
             </div>
         </div>
     </div>
 </div>
 
 <!-- MODAL FOR INQUIRY (full contact form with all fields: Company, Contact, Email, Phone, Mobile, Fax, Zip, City, Country, Address) -->
-<div id="inquiryModal" class="modal-premium">
-    <div class="modal-premium-container">
-        <div class="modal-header-premium">
-            <h3>Request for Quotation</h3>
-            <p style="opacity:0.85; font-size:0.85rem;">Fill your business details. Our pharma expert will respond within 24h.</p>
-        </div>
-        <div class="modal-body-premium">
-            <form id="contactEnquiryForm">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label>Company Name <span class="required-star">*</span></label>
-                        <input type="text" id="companyName" placeholder="e.g. Sun Pharma" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Contact Person <span class="required-star">*</span></label>
-                        <input type="text" id="contactPerson" placeholder="Full name" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Email <span class="required-star">*</span></label>
-                        <input type="email" id="emailId" placeholder="procurement@company.com" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Mobile Number <span class="required-star">*</span></label>
-                        <input type="tel" id="mobileNum" placeholder="+91 98765 43210" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Phone (Landline)</label>
-                        <input type="text" id="phoneNum" placeholder="Optional">
-                    </div>
-                    <div class="form-group">
-                        <label>Fax</label>
-                        <input type="text" id="faxNum" placeholder="Optional">
-                    </div>
-                    <div class="form-group">
-                        <label>Zip / Postal Code</label>
-                        <input type="text" id="zipCodeVal" placeholder="e.g. 400001">
-                    </div>
-                    <div class="form-group">
-                        <label>City <span class="required-star">*</span></label>
-                        <input type="text" id="cityVal" placeholder="Mumbai, Ahmedabad" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Select Country <span class="required-star">*</span></label>
-                        <select id="countryVal" required>
-                            <option value="">-- Select Country --</option>
-                            <option>India</option><option>USA</option><option>Germany</option><option>UK</option>
-                            <option>France</option><option>Canada</option><option>Australia</option><option>UAE</option>
-                            <option>Singapore</option><option>Brazil</option><option>South Africa</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Address (Street/Suite) <span class="required-star">*</span></label>
-                        <input type="text" id="addressVal" placeholder="Building, street, area" required>
-                    </div>
-                    <div class="form-group full-width">
-                        <label>Additional Message / Product Interest</label>
-                        <textarea id="additionalMsgVal" rows="2" placeholder="I'm interested in GPT-9000i series, please send detailed quote..."></textarea>
-                    </div>
-                </div>
-                <button type="submit" class="submit-modal-btn">✓ Send Enquiry</button>
-                <button type="button" class="cancel-modal-btn" id="closeModalCancelBtn">Cancel</button>
-                <div id="modalFeedback" class="feedback-message"></div>
-            </form>
-        </div>
-    </div>
-</div>
 
-<script>
-    // Animation and Modal Logic only (no data generation, pure interactivity)
-    const modal = document.getElementById('inquiryModal');
-    const openBtn = document.getElementById('openInquiryModalBtn');
-    const cancelBtn = document.getElementById('closeModalCancelBtn');
-    const enquiryForm = document.getElementById('contactEnquiryForm');
-    const feedbackDiv = document.getElementById('modalFeedback');
 
-    // Open modal with animation and premium feel
-    openBtn.addEventListener('click', () => {
-        modal.classList.add('active');
-        feedbackDiv.innerHTML = '';
-        feedbackDiv.style.background = '';
-    });
 
-    function closeModal() {
-        modal.classList.remove('active');
-        enquiryForm.reset();
-        feedbackDiv.innerHTML = '';
-    }
-
-    cancelBtn.addEventListener('click', closeModal);
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) closeModal();
-    });
-
-    // Helper: Add shake animation dynamically
-    if (!document.querySelector('#shakeAnim')) {
-        const shakeStyle = document.createElement('style');
-        shakeStyle.id = 'shakeAnim';
-        shakeStyle.textContent = `@keyframes shakeInput { 0% { transform: translateX(0); } 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } 100% { transform: translateX(0); } }`;
-        document.head.appendChild(shakeStyle);
-    }
-
-    function highlightInvalidField(field) {
-        if (field) {
-            field.style.borderColor = '#D9534F';
-            field.style.animation = 'shakeInput 0.3s ease';
-            setTimeout(() => {
-                field.style.animation = '';
-                setTimeout(() => { field.style.borderColor = '#E2EDDE'; }, 1500);
-            }, 200);
-        }
-    }
-
-    // Form submit handler: Validate required fields & mobile, email, etc.
-    enquiryForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-
-        const company = document.getElementById('companyName').value.trim();
-        const contact = document.getElementById('contactPerson').value.trim();
-        const email = document.getElementById('emailId').value.trim();
-        const mobile = document.getElementById('mobileNum').value.trim();
-        const city = document.getElementById('cityVal').value.trim();
-        const country = document.getElementById('countryVal').value;
-        const address = document.getElementById('addressVal').value.trim();
-
-        if (!company || !contact || !email || !mobile || !city || !country || !address) {
-            feedbackDiv.innerHTML = '⚠️ Please fill all required fields (Company, Contact, Email, Mobile, City, Country, Address)';
-            feedbackDiv.style.color = '#D9534F';
-            feedbackDiv.style.background = '#FFEFEF';
-            feedbackDiv.style.padding = '8px';
-            feedbackDiv.style.borderRadius = '40px';
-            
-            const requiredFields = ['companyName', 'contactPerson', 'emailId', 'mobileNum', 'cityVal', 'countryVal', 'addressVal'];
-            requiredFields.forEach(id => {
-                const el = document.getElementById(id);
-                if (el && !el.value.trim()) highlightInvalidField(el);
-            });
-            return;
-        }
-
-        // Email validation
-        const emailRegex = /^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/;
-        if (!emailRegex.test(email)) {
-            feedbackDiv.innerHTML = '❌ Please enter a valid email address.';
-            feedbackDiv.style.color = '#D9534F';
-            const emailField = document.getElementById('emailId');
-            highlightInvalidField(emailField);
-            return;
-        }
-
-        // Mobile validation (basic length and digits)
-        const mobileRegex = /^[0-9+\-\s()]{8,20}$/;
-        if (!mobileRegex.test(mobile) || mobile.length < 8) {
-            feedbackDiv.innerHTML = '📱 Please enter a valid mobile number (min 8 digits).';
-            feedbackDiv.style.color = '#D9534F';
-            const mobileField = document.getElementById('mobileNum');
-            highlightInvalidField(mobileField);
-            return;
-        }
-
-        // Success animation and feedback
-        feedbackDiv.innerHTML = '✅ Inquiry sent successfully! Our team will contact you within 24 hours.';
-        feedbackDiv.style.color = '#5cb85c';
-        feedbackDiv.style.background = 'rgba(92, 184, 92, 0.12)';
-        feedbackDiv.style.padding = '10px';
-        feedbackDiv.style.borderRadius = '40px';
-        
-        const submitBtn = document.querySelector('.submit-modal-btn');
-        const originalText = submitBtn.textContent;
-        submitBtn.textContent = '✓ Sending...';
-        submitBtn.disabled = true;
-
-        // Simulate submission, then reset and close modal after success
-        setTimeout(() => {
-            enquiryForm.reset();
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-            closeModal();
-        }, 2000);
-    });
-
-    // Add fade-in animation on load for hero image and card
-    window.addEventListener('DOMContentLoaded', () => {
-        const heroSection = document.querySelector('.hero-image-section');
-        const detailCard = document.querySelector('.product-detail-card');
-        if (heroSection) {
-            heroSection.style.opacity = '0';
-            heroSection.style.transform = 'translateY(18px)';
-            heroSection.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            setTimeout(() => {
-                heroSection.style.opacity = '1';
-                heroSection.style.transform = 'translateY(0)';
-            }, 50);
-        }
-        if (detailCard) {
-            detailCard.style.opacity = '0';
-            detailCard.style.transform = 'translateY(18px)';
-            detailCard.style.transition = 'opacity 0.5s ease 0.1s, transform 0.5s ease';
-            setTimeout(() => {
-                detailCard.style.opacity = '1';
-                detailCard.style.transform = 'translateY(0)';
-            }, 120);
-        }
-    });
-</script>
     {% include 'partials/footer.html' %}
 
   <!-- Back to Top -->

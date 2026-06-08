@@ -302,114 +302,17 @@
 
   <div class="marquee-track-wrap">
     <div class="marquee-track">
-
+{% for client in clients %}
       <div class="logo-pill">
-        <img src="assets/clients/zydus.png" alt="ZydusPharma" class="logo-img" />
-        <div><div class="logo-name">ZydusPharma</div><div class="logo-sub">Pharmaceuticals</div></div>
+        <img src="{{ client.logo.url }}" alt="{{ client.name }}" class="logo-img" />
       </div>
       <div class="marquee-dot"></div>
-
-      <div class="logo-pill">
-        <img src="assets/clients/steellux.png" alt="SteelLux" class="logo-img" />
-        <div><div class="logo-name">SteelLux</div><div class="logo-sub">Industrial</div></div>
-      </div>
-      <div class="marquee-dot"></div>
-
-      <div class="logo-pill">
-        <img src="assets/clients/novachem.png" alt="NovaChem" class="logo-img" />
-        <div><div class="logo-name">NovaChem</div><div class="logo-sub">Chemicals</div></div>
-      </div>
-      <div class="marquee-dot"></div>
-
-      <div class="logo-pill">
-        <img src="assets/clients/biolab.png" alt="BioLab Inc." class="logo-img" />
-        <div><div class="logo-name">BioLab Inc.</div><div class="logo-sub">Research</div></div>
-      </div>
-      <div class="marquee-dot"></div>
-
-      <div class="logo-pill">
-        <img src="assets/clients/agrogen.png" alt="AgroGen" class="logo-img" />
-        <div><div class="logo-name">AgroGen</div><div class="logo-sub">Agro-Science</div></div>
-      </div>
-      <div class="marquee-dot"></div>
-
-      <div class="logo-pill">
-        <img src="assets/clients/medixcorp.png" alt="MedixCorp" class="logo-img" />
-        <div><div class="logo-name">MedixCorp</div><div class="logo-sub">Healthcare</div></div>
-      </div>
-      <div class="marquee-dot"></div>
-
-      <div class="logo-pill">
-        <img src="assets/clients/precisiontech.png" alt="PrecisionTech" class="logo-img" />
-        <div><div class="logo-name">PrecisionTech</div><div class="logo-sub">Engineering</div></div>
-      </div>
-      <div class="marquee-dot"></div>
-
-      <div class="logo-pill">
-        <img src="assets/clients/rxsolutions.png" alt="RxSolutions" class="logo-img" />
-        <div><div class="logo-name">RxSolutions</div><div class="logo-sub">Pharma</div></div>
-      </div>
-      <div class="marquee-dot"></div>
-
-      <!-- ── Duplicate set for seamless infinite loop ── -->
-
-      <div class="logo-pill">
-        <img src="assets/clients/zydus.png" alt="ZydusPharma" class="logo-img" />
-        <div><div class="logo-name">ZydusPharma</div><div class="logo-sub">Pharmaceuticals</div></div>
-      </div>
-      <div class="marquee-dot"></div>
-
-      <div class="logo-pill">
-        <img src="assets/clients/steellux.png" alt="SteelLux" class="logo-img" />
-        <div><div class="logo-name">SteelLux</div><div class="logo-sub">Industrial</div></div>
-      </div>
-      <div class="marquee-dot"></div>
-
-      <div class="logo-pill">
-        <img src="assets/clients/novachem.png" alt="NovaChem" class="logo-img" />
-        <div><div class="logo-name">NovaChem</div><div class="logo-sub">Chemicals</div></div>
-      </div>
-      <div class="marquee-dot"></div>
-
-      <div class="logo-pill">
-        <img src="assets/clients/biolab.png" alt="BioLab Inc." class="logo-img" />
-        <div><div class="logo-name">BioLab Inc.</div><div class="logo-sub">Research</div></div>
-      </div>
-      <div class="marquee-dot"></div>
-
-      <div class="logo-pill">
-        <img src="assets/clients/agrogen.png" alt="AgroGen" class="logo-img" />
-        <div><div class="logo-name">AgroGen</div><div class="logo-sub">Agro-Science</div></div>
-      </div>
-      <div class="marquee-dot"></div>
-
-      <div class="logo-pill">
-        <img src="assets/clients/medixcorp.png" alt="MedixCorp" class="logo-img" />
-        <div><div class="logo-name">MedixCorp</div><div class="logo-sub">Healthcare</div></div>
-      </div>
-      <div class="marquee-dot"></div>
-
-      <div class="logo-pill">
-        <img src="assets/clients/precisiontech.png" alt="PrecisionTech" class="logo-img" />
-        <div><div class="logo-name">PrecisionTech</div><div class="logo-sub">Engineering</div></div>
-      </div>
-      <div class="marquee-dot"></div>
-
-      <div class="logo-pill">
-        <img src="assets/clients/rxsolutions.png" alt="RxSolutions" class="logo-img" />
-        <div><div class="logo-name">RxSolutions</div><div class="logo-sub">Pharma</div></div>
-      </div>
-      <div class="marquee-dot"></div>
-
+{% endfor %}
+    
     </div>
   </div>
 
-  <div class="clients-stats">
-    <div class="client-stat"><span class="stat-num">120+</span><span class="stat-lbl">Clients Worldwide</span></div>
-    <div class="client-stat"><span class="stat-num">18</span><span class="stat-lbl">Countries Served</span></div>
-    <div class="client-stat"><span class="stat-num">99%</span><span class="stat-lbl">Retention Rate</span></div>
-    <div class="client-stat"><span class="stat-num">15yr</span><span class="stat-lbl">Industry Experience</span></div>
-  </div>
+
 </section>
   <!-- ========== CONTACT ========== -->
 
