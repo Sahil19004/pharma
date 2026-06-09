@@ -3138,10 +3138,10 @@ select {
 .logo-pill {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   background: #fff;
   border-radius: 12px;
-  padding: 12px 22px;
+  padding: 14px 24px;
   flex-shrink: 0;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   cursor: default;
@@ -3154,8 +3154,9 @@ select {
 
 /* ── Logo Image ── */
 .logo-img {
-  width: 40px;
-  height: 40px;
+  width: auto;
+  height: clamp(48px, 5vw, 72px);
+  max-width: clamp(120px, 14vw, 180px);
   object-fit: contain;
   object-position: center;
   flex-shrink: 0;
@@ -3231,12 +3232,13 @@ select {
   }
 
   .logo-pill {
-    padding: 10px 16px;
+    gap: 12px;
+    padding: 12px 18px;
   }
 
   .logo-img {
-    width: 32px;
-    height: 32px;
+    height: clamp(36px, 10vw, 52px);
+    max-width: clamp(96px, 28vw, 140px);
   }
 }
 
