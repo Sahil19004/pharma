@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Banner, Category, Client, Product, ServiceCategory, Service, Gallery, Contact,Client
+from .models import Banner, Category, Client, Product, ServiceCategory, Service, Gallery, Contact, Client, PolicyPage
 # Create your views here.
 def indexpage(request):
     banner = Banner.objects.all()
@@ -126,4 +126,15 @@ def product_detail(request, product_name):
         request,
         'productdetail.html',
         {'product': product, 'service_categories': service_categories, 'categories': categories}
+    )
+
+
+def policy_page(request, slug):
+    page = get_object_or_404(PolicyPage, slug=slug)
+    service_categories = ServiceCategory.objects.all()
+    categories = Category.objects.all()
+    return render(
+        request,
+        'policy_page.html',
+        {'page': page, 'service_categories': service_categories, 'categories': categories}
     )

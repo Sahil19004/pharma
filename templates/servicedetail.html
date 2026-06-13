@@ -96,10 +96,10 @@
           <h2 class="section-title">{{ service.key_features_heading }}</h2>
         </div>
         <div class="svc-features-grid">
-          <div class="svc-feature-card fade-in" style="--delay: 0s">
+          <div class="svc-feature-card fade-in svc-feature-card-full" style="--delay: 0s">
             <div class="svc-feature-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
             <h3>{{ service.key_features_heading }}</h3>
-            <p>{{ service.key_features_description }}</p>
+            <div class="svc-richtext">{{ service.key_features_description|safe }}</div>
           </div>
         </div>
       </div>

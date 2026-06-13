@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
+from ckeditor.fields import RichTextField
 # Create your models here.
 class Banner(models.Model):
     image = models.ImageField(upload_to='banners/')
@@ -21,7 +22,7 @@ class Product(models.Model):
     name=models.CharField(max_length=100)
     image=models.ImageField(upload_to='products/')
     description=models.TextField()
-    specifications=models.TextField()
+    specifications=RichTextField(null=True, blank=True)
     
     def __str__(self):
         return self.name
@@ -45,7 +46,7 @@ class Service(models.Model):
     about_heading=models.CharField(max_length=200)
     about_description=models.TextField()
     key_features_heading=models.CharField(max_length=200)
-    key_features_description=models.TextField()
+    key_features_description=RichTextField(null=True, blank=True)
     image=models.ImageField(upload_to='services/')
     
     def __str__(self):
@@ -78,3 +79,12 @@ class Client(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class PolicyPage(models.Model):
+    title = models.CharField(max_length=120)
+    slug = models.SlugField(unique=True)
+    content = RichTextField(null=True, blank=True)
+
+    def __str__(self):
+        return self.title
