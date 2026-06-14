@@ -717,7 +717,7 @@ select {
   align-items: center;
   overflow: hidden;
   padding-top: var(--nav-height);
-  z-index: -999999999;
+  z-index: 0;
 }
 
 /* ── Carousel Slides ── */
@@ -974,8 +974,8 @@ select {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(255, 255, 255, 0.12);
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: #9CCB00;
+  border: 2px solid rgba(156, 203, 0, 0.35);
   backdrop-filter: blur(8px);
   border-radius: 16px;
   padding: 20px 28px;
@@ -988,6 +988,7 @@ select {
   font-size: 2rem;
   font-weight: 800;
   line-height: 1;
+  color: #ffffff;
 }
 
 .badge-label {
@@ -3247,7 +3248,7 @@ select {
 
 /* ── Logo Image ── */
 .logo-img {
-  width: 100%;
+  width: 100px;
   height: auto;
   max-width: 100%;
   object-fit: contain;
@@ -3331,7 +3332,7 @@ select {
   }
 
   .logo-img {
-    width: 100%;
+    width: clamp(76px, 24vw, 100px);
     height: auto;
     max-width: 100%;
   }

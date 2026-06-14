@@ -235,13 +235,13 @@
       World-class manufacturing solutions delivering certified products to global markets. Where innovation meets industrial precision.
     </p>
     <div class="hero-buttons reveal-up delay-3">
-      <a href="#products" class="btn btn-primary">Explore Products</a>
+      <a href="{% if categories %}{% url 'products' categories.0.slug %}{% else %}#{% endif %}" class="btn btn-primary">Explore Products</a>
       <a href="{% url 'contact' %}" class="btn btn-outline">Contact Us</a>
     </div>
     <div class="hero-stats reveal-up delay-4">
-      <div class="stat"><span class="stat-num">20+</span><span class="stat-label">Years Experience</span></div>
+      <div class="stat"><span class="stat-num">15+</span><span class="stat-label">Years Experience</span></div>
       <div class="stat-divider"></div>
-      <div class="stat"><span class="stat-num">500+</span><span class="stat-label">Global Clients</span></div>
+      <div class="stat"><span class="stat-num">100+</span><span class="stat-label">Global Clients</span></div>
       <div class="stat-divider"></div>
       <div class="stat"><span class="stat-num">50+</span><span class="stat-label">Countries Served</span></div>
     </div>
@@ -255,11 +255,12 @@
       <div class="about-grid">
         <div class="about-visual fade-in-left">
           <div class="about-img-frame">
-            <div class="about-img-placeholder">
+            <div class="about-img-placeholder" style="background-image: url('{% static 'images/jietabout.jpeg' %}'); background-size: cover; background-position: center;">
               <div class="img-pattern"></div>
-              <div class="img-badge">
-                <span class="badge-num">ISO</span>
-                <span class="badge-label">9001:2015</span>
+              <div class="img-badge" style="color: #01315b;">
+                <span class="badge-num"  style="color: #01315b;">ISO</span>
+                <span class="badge-label">9001:2015</span><br/>                
+                <span class="badge-label">14001:2015</span>
               </div>
             </div>
             <div class="about-float-card">
@@ -270,16 +271,11 @@
         </div>
         <div class="about-text fade-in-right">
           <p class="section-tag">Who We Are</p>
-          <h2 class="section-title">Two Decades of Manufacturing <span class="text-green">Excellence</span></h2>
+          <h2 class="section-title">Engineering <span class="text-green">Excellence</span> Beyond Boundaries</h2>
           <p class="about-desc">jiet is a leading B2B manufacturing company specializing in precision-engineered products for pharmaceutical, industrial, and chemical sectors. Our state-of-the-art facilities adhere to global quality standards.</p>
           <p class="about-desc">We combine cutting-edge technology with deep industry expertise to deliver solutions that power your business forward—on time, every time.</p>
           <div class="about-features">
-            <div class="feature-item">
-              <div class="feature-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke="#5cb85c" stroke-width="2" stroke-linecap="round"/></svg>
-              </div>
-              <div><strong>Rapid Delivery</strong><p>Streamlined logistics to 50+ countries</p></div>
-            </div>
+          
             <div class="feature-item">
               <div class="feature-icon">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke="#5cb85c" stroke-width="2" stroke-linecap="round"/></svg>
@@ -292,8 +288,14 @@
               </div>
               <div><strong>Dedicated Support</strong><p>24/7 account management team</p></div>
             </div>
+              <div class="feature-item">
+              <div class="feature-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke="#5cb85c" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+              <div><strong>Global Presence</strong><p>Service available across all over India and International Markets</p></div>
+            </div>
           </div>
-          <a href="#contact" class="btn btn-primary">Learn More About Us</a>
+          <a href="{% url 'about' %}" class="btn btn-primary">Learn More About Us</a>
         </div>
       </div>
     </div>
@@ -314,7 +316,7 @@
 
   {% for product in products %}
   <div class="product-card fade-in" data-category="{{ product.category.name|lower }}">
-
+    
     <div class="product-img">
       <img
         src="{{ product.image.url }}"
@@ -322,11 +324,12 @@
         loading="lazy"
       />
 
-      <div class="product-overlay">
-        <a href="#contact" class="btn btn-sm">Request Quote</a>
+<div class="product-overlay">
+        <a href="{% url 'contact' %}" class="btn btn-sm">Request Quote</a>
       </div>
     </div>
 
+        <a href="{% url 'product_detail' product.name %}" class="product-card-link">
     <div class="product-info">
       <span class="product-tag">
         {{ product.category.name }}
@@ -336,8 +339,9 @@
 
       <p>{{ product.description|truncatewords:15 }}</p>
     </div>
-
+  </a>
   </div>
+
   {% endfor %}
 
 </div>
@@ -375,8 +379,8 @@
         <p>Join 500+ global companies that trust jiet for their manufacturing needs.</p>
       </div>
       <div class="cta-actions">
-        <a href="#contact" class="btn btn-white">Get a Free Quote</a>
-        <a href="tel:+911234567890" class="btn btn-outline-white">+91 123 456 7890</a>
+        <a href="{% url 'contact' %}" class="btn btn-white">Get a Free Quote</a>
+        <a href="tel:+91888715394" class="btn btn-outline-white">+91888715394</a>
       </div>
     </div>
   </section>
