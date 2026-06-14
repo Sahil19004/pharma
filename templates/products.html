@@ -364,12 +364,13 @@
     </style>
 </head>
 <body>
-    <div class="preloader" aria-hidden="true">
-        <div class="preloader-inner">
-            <img src="{% static 'images/finallogo.png' %}" alt="jiet Logo" class="preloader-logo" />
-            <span class="preloader-ring"></span>
-        </div>
+   <div class="preloader" aria-hidden="true">
+ <a href="{% url 'indexpage' %}">   <div class="preloader-inner">
+      <img src="{% static 'images/finallogo.png' %}" alt="jiet Logo" class="preloader-logo" />
+      <span class="preloader-ring"></span>
     </div>
+ </a>
+  </div>
  <!-- Custom Cursor -->
   <div class="cursor" id="cursor"></div>
   <div class="cursor-ring" id="cursorRing"></div>
