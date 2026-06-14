@@ -328,8 +328,13 @@ if (heroSection) statsObserver.observe(heroSection);
 const navLogo = document.querySelector('.nav-logo');
 if (navLogo) {
   navLogo.addEventListener('click', (e) => {
-    e.preventDefault();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const targetPath = new URL(navLogo.href, window.location.href).pathname.replace(/\/+$/, '') || '/';
+    const currentPath = window.location.pathname.replace(/\/+$/, '') || '/';
+
+    if (currentPath === targetPath) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   });
 }
 
