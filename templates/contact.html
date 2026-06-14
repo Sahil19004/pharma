@@ -135,6 +135,14 @@
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" stroke="currentColor" stroke-width="1.8"/></svg>
                 <span>+91 8888715394</span>
               </a>
+              <a href="mailto:sales@jiet.in">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 7a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" stroke="currentColor" stroke-width="1.8"/><path d="M4 7l8 6 8-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>sales@jiet.in</span>
+              </a>
+              <a href="mailto:info@jiet.in">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 7a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" stroke="currentColor" stroke-width="1.8"/><path d="M4 7l8 6 8-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>info@jiet.in</span>
+              </a>
             </div>
               <div class="contact-qr">
                 <img src="{% static 'images/qrcode.png' %}" alt="Scan to contact J Innovative Engineering" width="220" height="220" style="display:block;border-radius:12px;background:#fff;padding:8px;" />
@@ -214,6 +222,17 @@
   <button class="back-to-top" id="backToTop" aria-label="Back to top" onclick="scrollToTop()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 15l7-7 7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
 
   <script src="/static/js/script.js"></script>
+  <script>
+    // Center the contact section in view when the page opens
+    window.addEventListener('load', function () {
+      var section = document.getElementById('contact');
+      if (section) {
+        setTimeout(function () {
+          section.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 400);
+      }
+    });
+  </script>
   <script>
     const cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');let mouseX=0,mouseY=0,ringX=0,ringY=0;document.addEventListener('mousemove',e=>{mouseX=e.clientX;mouseY=e.clientY;cursor.style.left=mouseX+'px';cursor.style.top=mouseY+'px'});function animateRing(){ringX+=(mouseX-ringX)*.14;ringY+=(mouseY-ringY)*.14;ring.style.left=ringX+'px';ring.style.top=ringY+'px';requestAnimationFrame(animateRing)}animateRing();document.querySelectorAll('a, button').forEach(el=>{el.addEventListener('mouseenter',()=>{cursor.classList.add('hovered');ring.classList.add('hovered')});el.addEventListener('mouseleave',()=>{cursor.classList.remove('hovered');ring.classList.remove('hovered')})});
   </script>
