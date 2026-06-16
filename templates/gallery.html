@@ -86,6 +86,20 @@
   .lb-viewport img{max-height:46vh}
   .lb-footer{flex-direction:column;align-items:flex-start}
 }
+
+/* Eye-catching gallery header band — flush under navbar */
+.gallery-page .page-main{padding-top:var(--nav-height)}
+.gallery-head{position:relative;overflow:hidden;padding:30px 0;border-bottom:1px solid var(--border);
+  background:linear-gradient(120deg,#ffffff 0%,#f3f8ee 55%,#eaf4dd 100%)}
+.gallery-head::before{content:'';position:absolute;top:-80px;right:-40px;width:260px;height:260px;border-radius:50%;
+  background:radial-gradient(circle,rgba(156,203,0,.28),transparent 70%);filter:blur(6px);pointer-events:none}
+.gallery-head::after{content:'';position:absolute;inset:0;
+  background-image:radial-gradient(rgba(92,184,92,.10) 1px,transparent 1px);background-size:22px 22px;opacity:.7;pointer-events:none}
+.gallery-head-inner{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.gallery-head-title{font-size:1.8rem;font-weight:800;letter-spacing:-.01em;color:var(--text-dark);margin:0;line-height:1.1}
+.gallery-head-title .text-green{color:var(--green-dark)}
+.gallery-head-sub{display:inline-flex;align-items:center;gap:9px;margin:0;background:rgba(255,255,255,.85);border:1px solid var(--border);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:var(--text-mid);font-size:.82rem;font-weight:600;padding:8px 16px;border-radius:30px;box-shadow:0 4px 14px rgba(20,40,20,.06)}
+.gallery-head-sub::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px rgba(156,203,0,.25)}
 </style>
 </head>
 <body class="gallery-page">
@@ -117,13 +131,13 @@
         <li class="nav-dropdown">
           <a href="{% url 'services' %}" class="nav-link dropdown-toggle">Services</a>
           <div class="dropdown-menu">
-            <a href="{% url 'services' %}" class="dropdown-item">All Services</a>
             {% for category in service_categories %}
             <a href="{% url 'service_detail' category.slug %}" class="dropdown-item">{{ category.name }}</a>
             {% endfor %}
           </div>
         </li>
         <li><a href="{% url 'gallery' %}" class="nav-link">Gallery</a></li>
+        <li><a href="{% url 'blog' %}" class="nav-link">Blog</a></li>
         <li><a href="{% url 'contact' %}" class="nav-link">Contact</a></li>
         <li><a href="{% url 'contact' %}" class="nav-cta">Get a Quote</a></li>
       </ul>
@@ -134,10 +148,10 @@
   </nav>
 
 <main class="page-main">
-  <section class="page-hero-lite">
-    <div class="container">
-      <p class="section-tag">Gallery</p>
-     
+  <section class="gallery-head">
+    <div class="container gallery-head-inner">
+      <h1 class="gallery-head-title">Our <span class="text-green">Gallery</span></h1>
+      <p class="gallery-head-sub">Projects &amp; Highlights</p>
     </div>
   </section>
 

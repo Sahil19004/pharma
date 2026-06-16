@@ -47,13 +47,13 @@
         <li class="nav-dropdown">
           <a href="{% url 'services' %}" class="nav-link dropdown-toggle">Services</a>
           <div class="dropdown-menu">
-            <a href="{% url 'services' %}" class="dropdown-item">All Services</a>
             {% for category in service_categories %}
             <a href="{% url 'service_detail' category.slug %}" class="dropdown-item">{{ category.name }}</a>
             {% endfor %}
           </div>
         </li>
         <li><a href="{% url 'gallery' %}" class="nav-link">Gallery</a></li>
+        <li><a href="{% url 'blog' %}" class="nav-link">Blog</a></li>
         <li><a href="{% url 'contact' %}" class="nav-link active">Contact</a></li>
         <li><a href="{% url 'contact' %}" class="nav-cta">Get a Quote</a></li>
       </ul>

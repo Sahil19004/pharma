@@ -11,4 +11,6 @@ urlpatterns = [
 	path('service-detail-info/<int:service_id>/', views.service_detail_info, name='service_detail_info'),
 	path('product-detail/<str:product_name>/', views.product_detail, name='product_detail'),
 	path('policy/<slug:slug>/', views.policy_page, name='policy_page'),
+	path('blog/', views.blog, name='blog'),
+	path('blog/<slug:slug>/', views.blog_detail, name='blog_detail'),
 ]

@@ -15,113 +15,64 @@
     .cursor-ring{position:fixed;width:38px;height:38px;border:1.5px solid rgba(92,184,92,.5);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:transform .12s linear,width .25s,height .25s,border-color .25s}
     .cursor.hovered{width:20px;height:20px;opacity:.6}
     .cursor-ring.hovered{width:56px;height:56px;border-color:#5cb85c}
-    /* NEW SERVICE CARD DESIGN */
-.service-catalog-card {
-    background: #ffffff;
-    border-radius: 24px;
-    overflow: hidden;
-  border: 1px solid rgba(92,184,92,0.2);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-}
+    /* Eye-catching services header band — flush under navbar */
+    .services-page .page-main{padding-top:var(--nav-height)}
+    .services-head{position:relative;overflow:hidden;padding:36px 0;border-bottom:1px solid var(--border);
+      background:linear-gradient(120deg,#ffffff 0%,#f3f8ee 55%,#eaf4dd 100%);}
+    .services-head::before{content:'';position:absolute;top:-80px;right:-40px;width:280px;height:280px;border-radius:50%;
+      background:radial-gradient(circle,rgba(156,203,0,.28),transparent 70%);filter:blur(6px);pointer-events:none}
+    .services-head::after{content:'';position:absolute;inset:0;
+      background-image:radial-gradient(rgba(92,184,92,.10) 1px,transparent 1px);background-size:22px 22px;opacity:.7;pointer-events:none}
+    .services-head-inner{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
+    .services-head-title{font-size:1.95rem;font-weight:800;letter-spacing:-.01em;color:var(--text-dark);margin:0;line-height:1.1}
+    .services-head-title .text-green{color:var(--green-dark)}
+    .services-head-sub{display:inline-flex;align-items:center;gap:9px;margin:0;
+      background:rgba(255,255,255,.85);border:1px solid var(--border);
+      backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+      color:var(--text-mid);font-size:.82rem;font-weight:600;letter-spacing:.02em;padding:8px 16px;border-radius:30px;box-shadow:0 4px 14px rgba(20,40,20,.06)}
+    .services-head-sub::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px rgba(156,203,0,.25)}
+    /* ===== Modern Service Cards ===== */
+    .services-overview{padding:48px 0 96px;background:
+      radial-gradient(circle at 0% 0%, rgba(156,203,0,.06), transparent 38%),
+      radial-gradient(circle at 100% 12%, rgba(92,184,92,.05), transparent 40%);}
+    .service-catalog-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px}
 
-.service-catalog-card:hover {
-  transform: translateY(-8px);
-  border-color: rgba(92,184,92,0.45);
-  box-shadow: 0 18px 36px rgba(92,184,92,0.2);
-}
+    .service-catalog-card{
+      position:relative;background:#fff;border-radius:22px;overflow:hidden;
+      border:1px solid var(--border);box-shadow:0 6px 22px rgba(20,40,20,.06);
+      display:flex;flex-direction:column;
+      transition:transform .45s cubic-bezier(.4,0,.2,1),box-shadow .45s,border-color .45s;
+    }
+    .service-catalog-card:hover{transform:translateY(-10px);box-shadow:0 28px 52px rgba(20,40,20,.16);border-color:rgba(156,203,0,.55)}
 
-/* IMAGE SECTION */
-.service-img-wrapper {
-    width: 100%;
-    aspect-ratio: 1/1; /* perfect square */
-    overflow: hidden;
-  background: linear-gradient(135deg, rgba(92,184,92,0.08), rgba(92,184,92,0.02));
-  position: relative;
-}
+    .service-img-wrapper{position:relative;aspect-ratio:16/11;overflow:hidden;background:var(--light-gray)}
+    .service-img-wrapper img{width:100%;height:100%;object-fit:cover;transition:transform .65s cubic-bezier(.4,0,.2,1)}
+    .service-catalog-card:hover .service-img-wrapper img{transform:scale(1.08)}
+    .service-img-wrapper::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(8,20,8,.5) 100%);pointer-events:none}
 
-.service-img-wrapper::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0) 60%, rgba(0,0,0,0.15) 100%);
-  pointer-events: none;
-}
+    .service-badge{position:absolute;top:14px;left:14px;z-index:2;display:inline-flex;align-items:center;gap:7px;
+      background:rgba(255,255,255,.92);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+      color:var(--text-dark);font-size:.72rem;font-weight:600;padding:6px 13px;border-radius:30px;box-shadow:0 4px 14px rgba(0,0,0,.12)}
+    .service-badge::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--green)}
 
-.service-img-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+    .service-content{padding:22px 22px 24px;display:flex;flex-direction:column;flex:1}
+    .service-content h3{font-size:1.18rem;font-weight:700;color:var(--text-dark);margin:0 0 8px;line-height:1.35}
+    .service-content p{font-size:.9rem;color:var(--text-light);line-height:1.6;margin:0 0 18px;flex:1}
 
-/* CONTENT */
-.service-content {
-    padding: 1.2rem 1.4rem;
-}
+    .service-link-btn{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;position:relative;
+      font-size:.9rem;font-weight:600;color:var(--green-dark);padding:0;border:0;background:none}
+    .service-link-btn svg{transition:transform .3s ease}
+    .service-catalog-card:hover .service-link-btn svg{transform:translateX(5px)}
+    .service-link-btn::after{content:'';position:absolute;left:0;bottom:-5px;width:0;height:2px;background:var(--green);transition:width .35s ease}
+    .service-catalog-card:hover .service-link-btn::after{width:100%}
 
-.service-content h3 {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-  color: #153015;
-}
-
-.service-content p {
-    font-size: 0.9rem;
-    margin-bottom: 0.8rem;
-  color: #3f4f3f;
-}
-
-.service-content ul {
-    padding-left: 1rem;
-    margin-bottom: 1rem;
-}
-
-.service-content ul li {
-    font-size: 0.85rem;
-    margin-bottom: 0.3rem;
-}
-
-.service-link-btn {
-    display: inline-block;
-    padding: 0.6rem 1.2rem;
-    border: 1.5px solid #5cb85c;
-    border-radius: 50px;
-    color: #5cb85c;
-    font-weight: 600;
-    transition: 0.3s;
-}
-
-.service-link-btn:hover {
-    background: #5cb85c;
-    color: #fff;
-}
-
-@media (max-width: 768px) {
-  .service-img-wrapper {
-    aspect-ratio: 4/3;
-  }
-
-  .service-content {
-    padding: 1rem 1.1rem;
-  }
-
-  .service-content h3 {
-    font-size: 1.05rem;
-  }
-
-  .service-content p {
-    font-size: 0.85rem;
-  }
-
-  .service-content ul li {
-    font-size: 0.82rem;
-  }
-
-  .service-link-btn {
-    padding: 0.5rem 1rem;
-    font-size: 0.85rem;
-  }
-}
+    @media (max-width:1080px){.service-catalog-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media (max-width:640px){
+      .service-catalog-grid{grid-template-columns:1fr;gap:22px}
+      .services-head{padding:28px 0}
+      .services-head-title{font-size:1.55rem}
+      .service-content{padding:18px 18px 20px}
+    }
   </style>
 </head>
 <body class="services-page">
@@ -155,13 +106,13 @@
         <li class="nav-dropdown">
           <a href="{% url 'services' %}" class="nav-link dropdown-toggle">Services</a>
           <div class="dropdown-menu">
-            <a href="{% url 'services' %}" class="dropdown-item">All Services</a>
             {% for category in service_categories %}
             <a href="{% url 'service_detail' category.slug %}" class="dropdown-item">{{ category.name }}</a>
             {% endfor %}
           </div>
         </li>
         <li><a href="{% url 'gallery' %}" class="nav-link">Gallery</a></li>
+        <li><a href="{% url 'blog' %}" class="nav-link">Blog</a></li>
         <li><a href="{% url 'contact' %}" class="nav-link">Contact</a></li>
         <li><a href="{% url 'contact' %}" class="nav-cta">Get a Quote</a></li>
       </ul>
@@ -172,12 +123,10 @@
   </nav>
 
   <main class="page-main">
-    <section class="page-hero-lite">
-      <div class="page-hero-texture"></div>
-      <div class="container" style="position:relative;z-index:1;">
-        <p class="section-tag reveal-up">Our Services</p>
-        <h1 class="section-title reveal-up delay-1">Engineering <span class="text-green">Service Catalogue</span></h1>
-        <p class="section-sub reveal-up delay-2">Choose a service to view complete details, service image, description, and features.</p>
+    <section class="services-head">
+      <div class="container services-head-inner">
+        <h1 class="services-head-title">Our <span class="text-green">Services</span></h1>
+        <p class="services-head-sub">{% if services.0.category.name %}{{ services.0.category.name }}{% else %}Engineering Service Catalogue{% endif %}</p>
       </div>
     </section>
 
@@ -185,20 +134,20 @@
       <div class="container">
         <div class="service-catalog-grid">
 {% for service in services %}
-<article class="service-catalog-card">
+<article class="service-catalog-card fade-in">
 
   <div class="service-img-wrapper">
-    <img src="{{ service.image.url }}" alt="{{ service.name }}">
+    <img src="{{ service.image.url }}" alt="{{ service.name }}" loading="lazy">
+    {% if service.category.name %}<span class="service-badge">{{ service.category.name }}</span>{% endif %}
   </div>
 
   <div class="service-content">
     <h3>{{ service.name }}</h3>
-    <p>{{ service.description|truncatechars:80 }}</p>
-
-    
+    <p>{{ service.description|truncatechars:95 }}</p>
 
     <a href="{% url 'service_detail_info' service.id %}" class="service-link-btn">
-      Read More →
+      Read More
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </a>
   </div>
 
