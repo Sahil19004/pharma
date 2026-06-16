@@ -88,3 +88,27 @@ class PolicyPage(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Blog(models.Model):
+    title = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True, blank=True)
+    author = models.CharField(max_length=100, default='Admin')
+    category = models.CharField(max_length=100, blank=True)
+    featured_image = models.ImageField(upload_to='blogs/')
+    excerpt = models.TextField(help_text='Short summary shown on the blog listing cards.')
+    content = RichTextField()
+    is_published = models.BooleanField(default=True)
+    published_date = models.DateTimeField(auto_now_add=True)
+    updated_date = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-published_date']
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title
