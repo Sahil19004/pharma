@@ -125,8 +125,8 @@
   <main class="page-main">
     <section class="services-head">
       <div class="container services-head-inner">
-        <h1 class="services-head-title">Our <span class="text-green">Services</span></h1>
-        <p class="services-head-sub">{% if services.0.category.name %}{{ services.0.category.name }}{% else %}Engineering Service Catalogue{% endif %}</p>
+        <h1 class="services-head-title">{% if services.0.category.name %}{{ services.0.category.name }}{% else %}Engineering Service Catalogue{% endif %}</h1>
+      
       </div>
     </section>
 
@@ -138,7 +138,7 @@
 
   <div class="service-img-wrapper">
     <img src="{{ service.image.url }}" alt="{{ service.name }}" loading="lazy">
-    {% if service.category.name %}<span class="service-badge">{{ service.category.name }}</span>{% endif %}
+  
   </div>
 
   <div class="service-content">
